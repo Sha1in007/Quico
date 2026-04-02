@@ -1,4 +1,4 @@
-# ⚡ Quico — Quick AI Tools
+#  Quico — Quick AI Tools
 
 > Summarize text, explain code, write emails, and generate ideas — all from a single command interface.
 
@@ -6,19 +6,19 @@ Built with **Next.js 14**, **MongoDB**, **JWT Auth**, and **Claude AI (Anthropic
 
 ---
 
-## ✨ Features
+##  Features
 
-- 🧠 **AI-Powered Tools** — Summarize, explain code, write emails, generate ideas
-- 🎯 **Intent Detection** — Automatically detects what you're asking for
-- 🔐 **JWT Authentication** — Secure login/register with httpOnly cookies
-- 📜 **Query History** — All past queries saved and accessible
-- 📋 **Copy to Clipboard** — One-click copy for any output
-- 🌙 **Dark Mode UI** — Minimal command-palette design
-- 📱 **Responsive** — Works on all screen sizes
+-  **AI-Powered Tools** — Summarize, explain code, write emails, generate ideas
+-  **Intent Detection** — Automatically detects what you're asking for
+-  **JWT Authentication** — Secure login/register with httpOnly cookies
+-  **Query History** — All past queries saved and accessible
+-  **Copy to Clipboard** — One-click copy for any output
+-  **Dark Mode UI** — Minimal command-palette design
+-  **Responsive** — Works on all screen sizes
 
 ---
 
-## 🗂 Project Structure
+##  Project Structure
 
 ```
 quico/
@@ -58,7 +58,7 @@ quico/
 
 ---
 
-## 🚀 Local Setup
+##  Local Setup
 
 ### 1. Clone and install dependencies
 
@@ -100,7 +100,7 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🌐 Deploy to Vercel
+##  Deploy to Vercel
 
 ### 1. Push to GitHub
 
@@ -126,27 +126,27 @@ Your live URL will be something like `https://quico.vercel.app`
 
 ---
 
-## 🔧 How It Works
+##  How It Works
 
 ### Intent Detection (`lib/aiRouter.ts`)
 The app uses regex pattern matching to detect what the user wants:
 
 | Input Pattern | Intent | Tool |
 |--------------|--------|------|
-| "summarize...", "tldr..." | `summarize` | 📝 Summarize |
-| "explain code...", code blocks | `explain_code` | 💻 Explain Code |
-| "write email...", "draft mail..." | `generate_email` | ✉️ Write Email |
-| "ideas...", "brainstorm...", "startup..." | `generate_ideas` | 💡 Generate Ideas |
-| Everything else | `general` | ✨ General |
+| "summarize...", "tldr..." | `summarize` |  Summarize |
+| "explain code...", code blocks | `explain_code` |  Explain Code |
+| "write email...", "draft mail..." | `generate_email` | Write Email |
+| "ideas...", "brainstorm...", "startup..." | `generate_ideas` |  Generate Ideas |
+| Everything else | `general` | General |
 
 ### API Flow
 ```
-User Input → /api/ai → detectIntent() → Claude API → Save to History → Return response
+User Input → /api/ai → detectIntent() → Groq API → Save to History → Return response
 ```
 
 ---
 
-## 📝 Example Queries
+##  Example Queries
 
 ```
 Summarize this: [paste any article]
@@ -164,7 +164,7 @@ Give me startup ideas for college students in India
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -181,12 +181,9 @@ Give me startup ideas for college students in India
 
 ---
 
-## 👨‍💻 Built By
+##  Built By
 
-Made for B.Tech resume project by [Your Name]
+Made for B.Tech resume project by 
+Shalin Manjul
 
----
 
-## 📄 License
-
-MIT
