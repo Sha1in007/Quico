@@ -97,43 +97,42 @@ export default function HistoryPanel({ open, onClose, onReuse }: HistoryPanelPro
       {/* Backdrop */}
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+          className="fixed inset-0 z-40 bg-black/50"
           onClick={onClose}
         />
       )}
 
       {/* Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[400px] z-50 bg-[#0c0c18] border-l border-[#1e1e30] flex flex-col shadow-2xl transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-[360px] z-50 bg-[#0e0e0c] border-l border-[#1e1e1c] flex flex-col shadow-2xl transition-transform duration-250 ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Panel header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[#1e1e30]">
+        <div className="flex items-center justify-between px-4 py-3.5 border-b border-[#1e1e1c]">
           <div className="flex items-center gap-2">
-            <Clock size={15} className="text-violet-400" />
-            <h2 className="font-semibold text-white">History</h2>
+            <h2 className="font-semibold text-[#d8d8d4] text-[14px] tracking-tight">History</h2>
             {history.length > 0 && (
-              <span className="text-xs bg-[#1a1a2e] border border-[#252538] px-2 py-0.5 rounded-full text-[#7070a0]">
+              <span className="text-[11px] bg-[#1a1a18] border border-[#2a2a28] px-1.5 py-0.5 rounded-md text-[#5a5a54] font-mono">
                 {history.length}
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             {history.length > 0 && (
               <button
                 onClick={clearAll}
                 disabled={clearingAll}
-                className="text-xs text-red-400/70 hover:text-red-400 px-2 py-1 rounded-lg hover:bg-red-400/10 transition-all disabled:opacity-50"
+                className="text-[12px] text-[#905050] hover:text-[#c06060] px-2 py-1 rounded-md hover:bg-[#2a1c1c] transition-all disabled:opacity-50 font-[450]"
               >
-                {clearingAll ? 'Clearing...' : 'Clear all'}
+                {clearingAll ? 'Clearing…' : 'Clear all'}
               </button>
             )}
             <button
               onClick={onClose}
-              className="w-7 h-7 rounded-lg flex items-center justify-center text-[#6060808] text-[#606080] hover:text-white hover:bg-[#1a1a2e] transition-all"
+              className="w-7 h-7 rounded-md flex items-center justify-center text-[#4a4a48] hover:text-[#a8a8a0] hover:bg-[#1a1a18] transition-all"
             >
-              <X size={15} />
+              <X size={14} />
             </button>
           </div>
         </div>
@@ -142,36 +141,36 @@ export default function HistoryPanel({ open, onClose, onReuse }: HistoryPanelPro
         <div className="flex-1 overflow-y-auto">
           {loading ? (
             <div className="flex items-center justify-center py-16">
-              <Loader2 size={20} className="text-violet-400 animate-spin" />
+              <Loader2 size={16} className="text-[#4a4a48] animate-spin" />
             </div>
           ) : history.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 px-5 text-center">
-              <div className="w-12 h-12 rounded-2xl bg-[#12121e] border border-[#252538] flex items-center justify-center mb-3">
-                <Clock size={20} className="text-[#404060]" />
+            <div className="flex flex-col items-center justify-center py-20 px-5 text-center">
+              <div className="w-10 h-10 rounded-xl bg-[#141412] border border-[#2a2a28] flex items-center justify-center mb-3">
+                <Clock size={16} className="text-[#3a3a38]" />
               </div>
-              <p className="text-sm text-[#606080]">No history yet</p>
-              <p className="text-xs text-[#404060] mt-1">Your queries will appear here</p>
+              <p className="text-[13px] text-[#4a4a48] font-[450]">No history yet</p>
+              <p className="text-[12px] text-[#3a3a38] mt-1">Your queries will show up here</p>
             </div>
           ) : (
-            <div className="p-3 flex flex-col gap-2">
+            <div className="p-2 flex flex-col gap-1">
               {history.map((entry) => (
                 <div
                   key={entry._id}
-                  className="group rounded-xl border border-[#1e1e30] bg-[#12121e] hover:border-[#252538] hover:bg-[#161625] transition-all p-3.5"
+                  className="group rounded-lg border border-transparent hover:border-[#242422] hover:bg-[#141412] transition-all p-3"
                 >
                   {/* Intent badge + time */}
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-[#7070a0] flex items-center gap-1">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[11.5px] text-[#5a5a54] flex items-center gap-1 font-[450]">
                       <span>{entry.emoji}</span>
                       {entry.label}
                     </span>
-                    <span className="text-[11px] text-[#404060]">
+                    <span className="text-[11px] text-[#3a3a38] font-mono">
                       {timeAgo(entry.createdAt)}
                     </span>
                   </div>
 
                   {/* Query */}
-                  <p className="text-sm text-[#c0c0d8] line-clamp-2 leading-relaxed mb-3">
+                  <p className="text-[13px] text-[#a8a8a0] line-clamp-2 leading-relaxed mb-2.5 font-[450]">
                     {entry.query}
                   </p>
 
@@ -182,20 +181,20 @@ export default function HistoryPanel({ open, onClose, onReuse }: HistoryPanelPro
                         onReuse(entry.query);
                         onClose();
                       }}
-                      className="flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 bg-violet-400/10 hover:bg-violet-400/20 px-2.5 py-1.5 rounded-lg transition-all"
+                      className="flex items-center gap-1 text-[12px] text-[#7a9a7a] hover:text-[#9abc9a] px-2 py-1 rounded-md hover:bg-[#1a221a] transition-all font-[450]"
                     >
-                      <RotateCcw size={11} />
+                      <RotateCcw size={10} />
                       Reuse
                     </button>
                     <button
                       onClick={() => deleteEntry(entry._id)}
                       disabled={deletingId === entry._id}
-                      className="flex items-center gap-1.5 text-xs text-red-400/70 hover:text-red-400 bg-red-400/5 hover:bg-red-400/10 px-2.5 py-1.5 rounded-lg transition-all disabled:opacity-50"
+                      className="flex items-center gap-1 text-[12px] text-[#905050] hover:text-[#c06060] px-2 py-1 rounded-md hover:bg-[#2a1c1c] transition-all disabled:opacity-50 font-[450]"
                     >
                       {deletingId === entry._id ? (
-                        <Loader2 size={11} className="animate-spin" />
+                        <Loader2 size={10} className="animate-spin" />
                       ) : (
-                        <Trash2 size={11} />
+                        <Trash2 size={10} />
                       )}
                       Delete
                     </button>

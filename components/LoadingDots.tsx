@@ -1,15 +1,14 @@
 'use client';
 
 export default function LoadingDots({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
-  const dotSize = size === 'sm' ? 'w-1.5 h-1.5' : size === 'lg' ? 'w-3 h-3' : 'w-2 h-2';
+  const dotSize = size === 'sm' ? 'w-1 h-1' : size === 'lg' ? 'w-2.5 h-2.5' : 'w-1.5 h-1.5';
 
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-1">
       {[0, 1, 2].map((i) => (
         <span
           key={i}
-          className={`${dotSize} bg-violet-400 rounded-full animate-bounce`}
-          style={{ animationDelay: `${i * 0.15}s`, animationDuration: '0.9s' }}
+          className={`${dotSize} bg-[#4a4a48] rounded-full bounce-dot`}
         />
       ))}
     </div>

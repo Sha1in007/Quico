@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { LogOut, History, Zap, User, ChevronDown } from 'lucide-react';
+import { LogOut, Clock, ChevronDown } from 'lucide-react';
 
 interface NavbarProps {
   user: { name: string; email: string } | null;
@@ -36,31 +36,28 @@ export default function Navbar({ user, onToggleHistory, historyOpen }: NavbarPro
     .slice(0, 2) || 'U';
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-14 border-b border-[#1e1e30] bg-[#080810]/80 backdrop-blur-xl">
-      <div className="max-w-5xl mx-auto px-4 h-full flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 h-12 border-b border-[#1e1e1c] bg-[#0e0e0c]/90 backdrop-blur-xl">
+      <div className="max-w-4xl mx-auto px-5 h-full flex items-center justify-between">
+
         {/* Logo */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center">
-            <Zap size={14} className="text-white" strokeWidth={2.5} />
-          </div>
-          <span className="font-bold text-white tracking-tight">Quico</span>
-          <span className="hidden sm:block text-[11px] text-[#5050708] bg-[#1a1a2e] border border-[#252538] px-2 py-0.5 rounded-full text-[#7070a0]">
-            AI Tools
-          </span>
+        <div className="flex items-center gap-2">
+          <span className="font-semibold text-[#e8e8e4] tracking-tight text-[15px]">Quico</span>
+          <span className="text-[#3a3a38]">/</span>
+          <span className="text-[13px] text-[#5a5a54]">{user?.name?.split(' ')[0] || 'workspace'}</span>
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {/* History toggle */}
           <button
             onClick={onToggleHistory}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all ${
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[13px] transition-all font-medium ${
               historyOpen
-                ? 'bg-violet-600/20 text-violet-400 border border-violet-600/30'
-                : 'text-[#8080a0] hover:text-white hover:bg-[#12121e] border border-transparent'
+                ? 'bg-[#1e1e1c] text-[#e0e0dc]'
+                : 'text-[#6a6a64] hover:text-[#c0c0bc] hover:bg-[#161614]'
             }`}
           >
-            <History size={15} />
+            <Clock size={13} />
             <span className="hidden sm:block">History</span>
           </button>
 
@@ -68,17 +65,17 @@ export default function Navbar({ user, onToggleHistory, historyOpen }: NavbarPro
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-lg border border-[#252538] bg-[#12121e] hover:bg-[#1a1a2e] transition-all"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-[#2a2a28] bg-[#161614] hover:bg-[#1e1e1c] transition-all text-[13px] font-medium text-[#c0c0bc]"
             >
-              <div className="w-6 h-6 rounded-md bg-violet-600/30 border border-violet-600/40 flex items-center justify-center">
-                <span className="text-[10px] font-bold text-violet-400">{initials}</span>
+              <div className="w-5 h-5 rounded-full bg-[#2e2e2c] flex items-center justify-center flex-shrink-0">
+                <span className="text-[9px] font-bold text-[#a0a09a]">{initials}</span>
               </div>
-              <span className="hidden sm:block text-sm text-[#c0c0d8] max-w-[120px] truncate">
+              <span className="hidden sm:block max-w-[100px] truncate">
                 {user?.name || 'User'}
               </span>
               <ChevronDown
-                size={13}
-                className={`text-[#606080] transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+                size={11}
+                className={`text-[#4a4a48] transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
               />
             </button>
 
@@ -88,21 +85,21 @@ export default function Navbar({ user, onToggleHistory, historyOpen }: NavbarPro
                   className="fixed inset-0 z-10"
                   onClick={() => setDropdownOpen(false)}
                 />
-                <div className="absolute right-0 top-full mt-2 w-52 bg-[#12121e] border border-[#252538] rounded-xl shadow-2xl z-20 overflow-hidden animate-fade-in">
-                  <div className="px-4 py-3 border-b border-[#1e1e30]">
-                    <p className="text-sm font-medium text-white truncate">{user?.name || 'User'}</p>
-                    <p className="text-xs text-[#6060808] text-[#606080] truncate mt-0.5">
-                      {user?.email || 'No email'}
+                <div className="absolute right-0 top-full mt-1.5 w-48 bg-[#161614] border border-[#2a2a28] rounded-lg shadow-xl z-20 overflow-hidden">
+                  <div className="px-3.5 py-2.5 border-b border-[#1e1e1c]">
+                    <p className="text-[13px] font-medium text-[#e0e0dc] truncate">{user?.name || 'User'}</p>
+                    <p className="text-[12px] text-[#5a5a54] truncate mt-0.5">
+                      {user?.email || ''}
                     </p>
                   </div>
-                  <div className="p-1.5">
+                  <div className="p-1">
                     <button
                       onClick={handleLogout}
                       disabled={loggingOut}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/10 transition-all disabled:opacity-50"
+                      className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-[13px] text-[#c06060] hover:bg-[#2a1c1c] transition-all disabled:opacity-50 font-medium"
                     >
-                      <LogOut size={14} />
-                      {loggingOut ? 'Logging out...' : 'Log out'}
+                      <LogOut size={13} />
+                      {loggingOut ? 'Logging out…' : 'Log out'}
                     </button>
                   </div>
                 </div>

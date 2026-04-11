@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import CommandInput from '@/components/CommandInput';
 import OutputCard from '@/components/OutputCard';
 import HistoryPanel from '@/components/HistoryPanel';
-import { Sparkles, FileText, Code2, Mail, Lightbulb } from 'lucide-react';
+import { FileText, Code2, Mail, Lightbulb } from 'lucide-react';
 
 interface User {
   id: string;
@@ -25,37 +25,29 @@ const TOOLS = [
   {
     icon: FileText,
     label: 'Summarize',
-    description: 'Condense any text into key points',
-    color: 'text-blue-400',
-    bg: 'bg-blue-400/10',
-    border: 'border-blue-400/20',
+    description: 'Condense text into key points',
+    color: 'text-[#7aafda]',
     example: 'Summarize this: ',
   },
   {
     icon: Code2,
     label: 'Explain Code',
-    description: 'Understand any code snippet',
-    color: 'text-green-400',
-    bg: 'bg-green-400/10',
-    border: 'border-green-400/20',
+    description: 'Break down any code snippet',
+    color: 'text-[#7aba8a]',
     example: 'Explain this code: ',
   },
   {
     icon: Mail,
     label: 'Write Email',
-    description: 'Draft professional emails fast',
-    color: 'text-yellow-400',
-    bg: 'bg-yellow-400/10',
-    border: 'border-yellow-400/20',
+    description: 'Draft professional emails',
+    color: 'text-[#c4a96e]',
     example: 'Write a formal email for ',
   },
   {
     icon: Lightbulb,
     label: 'Generate Ideas',
-    description: 'Brainstorm startup & project ideas',
-    color: 'text-orange-400',
-    bg: 'bg-orange-400/10',
-    border: 'border-orange-400/20',
+    description: 'Brainstorm startup ideas',
+    color: 'text-[#c48a6e]',
     example: 'Give me startup ideas for ',
   },
 ];
@@ -119,7 +111,7 @@ export default function DashboardPage() {
   const firstName = user?.name?.split(' ')[0] || 'there';
 
   return (
-    <div className="min-h-screen bg-[#080810]">
+    <div className="min-h-screen bg-[#0e0e0c]">
       <Navbar
         user={user}
         onToggleHistory={() => setHistoryOpen((p) => !p)}
@@ -134,29 +126,23 @@ export default function DashboardPage() {
       />
 
       {/* Main content */}
-      <main className="pt-14 min-h-screen flex flex-col">
-        <div className="flex-1 max-w-3xl mx-auto w-full px-4 py-10 flex flex-col gap-8">
+      <main className="pt-12 min-h-screen flex flex-col">
+        <div className="flex-1 max-w-2xl mx-auto w-full px-4 py-10 flex flex-col gap-6">
 
-          {/* Hero section — shown when no output */}
+          {/* Greeting — shown when no output */}
           {!output && !loading && (
-            <div className="text-center pt-6 animate-fade-in">
-              {/* Icon */}
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-violet-600/15 border border-violet-600/25 mb-5 shadow-lg shadow-violet-600/10">
-                <Sparkles size={26} className="text-violet-400" />
-              </div>
-
-              {/* Greeting */}
-              <h1 className="text-2xl sm:text-3xl font-semibold text-white mb-2">
-                Hi {firstName} 👋
+            <div className="pt-8 animate-fade-in">
+              <h1 className="text-[22px] font-semibold text-[#e8e8e4] tracking-tight mb-1">
+                Hey {firstName}
               </h1>
-              <p className="text-[#6666aa] text-base max-w-md mx-auto leading-relaxed">
-                What do you want to do today? Type anything or pick a tool below.
+              <p className="text-[14px] text-[#5a5a54] font-[450]">
+                What do you need help with today?
               </p>
             </div>
           )}
 
           {/* Command Input */}
-          <div className={`${output || loading ? 'pt-4' : ''}`}>
+          <div className={output || loading ? 'pt-2' : ''}>
             <CommandInput
               value={query}
               onChange={setQuery}
@@ -179,24 +165,22 @@ export default function DashboardPage() {
           {/* Tool cards — shown when no output */}
           {!output && !loading && (
             <div className="animate-fade-in">
-              <p className="text-xs font-medium text-[#555570] uppercase tracking-widest mb-3 text-center">
-                Available Tools
+              <p className="text-[11px] font-medium text-[#3a3a38] uppercase tracking-widest mb-2.5">
+                Tools
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {TOOLS.map((tool) => {
                   const Icon = tool.icon;
                   return (
                     <button
                       key={tool.label}
                       onClick={() => handleToolClick(tool.example)}
-                      className={`group flex flex-col items-start gap-2.5 p-4 rounded-xl border bg-[#0f0f1a] hover:bg-[#161625] transition-all duration-200 text-left ${tool.border} hover:border-opacity-60`}
+                      className="group flex flex-col items-start gap-2 p-3 rounded-xl border border-[#1e1e1c] bg-[#141412] hover:bg-[#1a1a18] hover:border-[#2a2a28] transition-all duration-150 text-left"
                     >
-                      <div className={`w-8 h-8 rounded-lg ${tool.bg} border ${tool.border} flex items-center justify-center`}>
-                        <Icon size={16} className={tool.color} />
-                      </div>
+                      <Icon size={14} className={tool.color} strokeWidth={1.75} />
                       <div>
-                        <p className="text-sm font-medium text-white leading-tight">{tool.label}</p>
-                        <p className="text-xs text-[#5555708] text-[#555570] mt-0.5 leading-snug">
+                        <p className="text-[12.5px] font-medium text-[#c8c8c4] leading-tight">{tool.label}</p>
+                        <p className="text-[11.5px] text-[#4a4a48] mt-0.5 leading-snug font-[450]">
                           {tool.description}
                         </p>
                       </div>
@@ -209,23 +193,23 @@ export default function DashboardPage() {
 
           {/* New query button after output */}
           {output && !loading && (
-            <div className="text-center animate-fade-in">
+            <div className="animate-fade-in">
               <button
                 onClick={() => {
                   setOutput(null);
                   setQuery('');
                 }}
-                className="text-sm text-[#6666aa] hover:text-violet-400 transition-colors border border-[#252538] hover:border-violet-500/40 px-5 py-2.5 rounded-xl bg-[#0f0f1a] hover:bg-[#1a1a2e]"
+                className="text-[13px] text-[#5a5a54] hover:text-[#a8a8a0] transition-colors border border-[#1e1e1c] hover:border-[#2a2a28] px-4 py-2 rounded-lg bg-[#141412] hover:bg-[#1a1a18] font-[450]"
               >
-                ✦ Ask something else
+                Ask something else
               </button>
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <footer className="text-center py-6 text-xs text-[#333350] border-t border-[#0f0f1a]">
-          Quico — built with Next.js, MongoDB & Claude AI
+        <footer className="text-center py-5 text-[11.5px] text-[#2e2e2c] border-t border-[#141412]">
+          Quico · Next.js, MongoDB, Claude
         </footer>
       </main>
     </div>

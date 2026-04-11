@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { Zap, Mail, Lock, User, ArrowRight, Loader2 } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Loader2 } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function RegisterPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
-      toast.success('Account created! Welcome to Quico 🎉');
+      toast.success('Account created. Welcome!');
       router.push('/dashboard');
       router.refresh();
     } catch (err: unknown) {
@@ -38,41 +38,33 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080810] flex items-center justify-center px-4">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-violet-600/5 rounded-full blur-3xl" />
-      </div>
-
-      <div className="w-full max-w-md relative">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-6">
-            <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center shadow-lg shadow-violet-600/30">
-              <Zap size={18} className="text-white" fill="white" />
-            </div>
-            <span className="text-2xl font-bold tracking-tight text-white">Quico</span>
-          </div>
-          <h1 className="text-2xl font-semibold text-white mb-1">Create your account</h1>
-          <p className="text-[#6666aa] text-sm">Start using AI tools in seconds</p>
+    <div className="min-h-screen bg-[#0e0e0c] flex items-center justify-center px-4">
+      <div className="w-full max-w-[360px]">
+        {/* Logo + heading */}
+        <div className="mb-8">
+          <p className="text-[22px] font-semibold text-[#e8e8e4] tracking-tight mb-1">
+            Quico
+          </p>
+          <p className="text-[14px] text-[#5a5a54] font-[450]">Create your account</p>
         </div>
 
-        {/* Card */}
-        <div className="bg-[#0f0f1a] border border-[#1e1e30] rounded-2xl p-8">
-          <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Form card */}
+        <div className="bg-[#141412] border border-[#242422] rounded-xl p-6">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* Name */}
             <div>
-              <label className="block text-xs font-medium text-[#8888aa] mb-1.5 uppercase tracking-wider">
-                Full Name
+              <label className="block text-[12px] font-medium text-[#6a6a64] mb-1.5">
+                Full name
               </label>
               <div className="relative">
-                <User size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#555570]" />
+                <User size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#3a3a38]" />
                 <input
                   type="text"
                   name="name"
                   value={form.name}
                   onChange={handleChange}
                   placeholder="Your name"
-                  className="w-full bg-[#080810] border border-[#252538] rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-[#444460] outline-none focus:border-violet-500 transition-colors"
+                  className="w-full bg-[#0e0e0c] border border-[#242422] rounded-lg pl-9 pr-3.5 py-2.5 text-[13.5px] text-[#e0e0dc] placeholder-[#3a3a38] outline-none focus:border-[#3a3a38] transition-colors font-[450]"
                   autoComplete="name"
                 />
               </div>
@@ -80,18 +72,18 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-medium text-[#8888aa] mb-1.5 uppercase tracking-wider">
+              <label className="block text-[12px] font-medium text-[#6a6a64] mb-1.5">
                 Email
               </label>
               <div className="relative">
-                <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#555570]" />
+                <Mail size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#3a3a38]" />
                 <input
                   type="email"
                   name="email"
                   value={form.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className="w-full bg-[#080810] border border-[#252538] rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-[#444460] outline-none focus:border-violet-500 transition-colors"
+                  className="w-full bg-[#0e0e0c] border border-[#242422] rounded-lg pl-9 pr-3.5 py-2.5 text-[13.5px] text-[#e0e0dc] placeholder-[#3a3a38] outline-none focus:border-[#3a3a38] transition-colors font-[450]"
                   autoComplete="email"
                 />
               </div>
@@ -99,18 +91,18 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-medium text-[#8888aa] mb-1.5 uppercase tracking-wider">
+              <label className="block text-[12px] font-medium text-[#6a6a64] mb-1.5">
                 Password
               </label>
               <div className="relative">
-                <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#555570]" />
+                <Lock size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#3a3a38]" />
                 <input
                   type="password"
                   name="password"
                   value={form.password}
                   onChange={handleChange}
                   placeholder="Min. 6 characters"
-                  className="w-full bg-[#080810] border border-[#252538] rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-[#444460] outline-none focus:border-violet-500 transition-colors"
+                  className="w-full bg-[#0e0e0c] border border-[#242422] rounded-lg pl-9 pr-3.5 py-2.5 text-[13.5px] text-[#e0e0dc] placeholder-[#3a3a38] outline-none focus:border-[#3a3a38] transition-colors font-[450]"
                   autoComplete="new-password"
                 />
               </div>
@@ -120,17 +112,17 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl py-3 text-sm font-medium flex items-center justify-center gap-2 transition-all duration-200 shadow-lg shadow-violet-600/20 mt-2"
+              className="w-full bg-[#e8e8e4] hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed text-[#0e0e0c] rounded-lg py-2.5 text-[13.5px] font-semibold flex items-center justify-center gap-2 transition-all duration-150 mt-1"
             >
               {loading ? (
                 <>
-                  <Loader2 size={15} className="animate-spin" />
-                  Creating account...
+                  <Loader2 size={13} className="animate-spin" />
+                  Creating account…
                 </>
               ) : (
                 <>
                   Create account
-                  <ArrowRight size={15} />
+                  <ArrowRight size={13} />
                 </>
               )}
             </button>
@@ -138,9 +130,9 @@ export default function RegisterPage() {
         </div>
 
         {/* Footer link */}
-        <p className="text-center text-sm text-[#555570] mt-6">
+        <p className="text-center text-[13px] text-[#4a4a48] mt-5 font-[450]">
           Already have an account?{' '}
-          <Link href="/login" className="text-violet-400 hover:text-violet-300 transition-colors">
+          <Link href="/login" className="text-[#a8a8a0] hover:text-[#e0e0dc] transition-colors">
             Sign in
           </Link>
         </p>

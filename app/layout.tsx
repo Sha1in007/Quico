@@ -6,29 +6,30 @@ import { Toaster } from 'react-hot-toast';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Quico — Quick AI Tools',
-  description: 'Summarize, explain code, write emails, generate ideas — all in one command.',
+  title: 'Quico',
+  description: 'Summarize, explain code, write emails, generate ideas.',
   icons: { icon: '/favicon.ico' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} font-sans bg-[#080810] text-white antialiased`}>
+      <body className={`${inter.variable} font-sans bg-[#0e0e0c] text-white antialiased`}>
         {children}
         <Toaster
           position="top-right"
           toastOptions={{
             duration: 3000,
             style: {
-              background: '#12121e',
-              color: '#e2e2f0',
-              border: '1px solid #252538',
-              borderRadius: '10px',
-              fontSize: '14px',
+              background: '#1a1a18',
+              color: '#e0e0dc',
+              border: '1px solid #2e2e2c',
+              borderRadius: '8px',
+              fontSize: '13.5px',
+              fontWeight: '450',
             },
-            success: { iconTheme: { primary: '#8b5cf6', secondary: '#12121e' } },
-            error: { iconTheme: { primary: '#ef4444', secondary: '#12121e' } },
+            success: { iconTheme: { primary: '#7fba7a', secondary: '#1a1a18' } },
+            error: { iconTheme: { primary: '#e06c6c', secondary: '#1a1a18' } },
           }}
         />
       </body>

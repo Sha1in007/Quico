@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Copy, Check, Sparkles } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 import toast from 'react-hot-toast';
 import LoadingDots from './LoadingDots';
 
@@ -16,12 +16,12 @@ interface OutputCardProps {
   loading: boolean;
 }
 
-const intentColors: Record<string, string> = {
-  summarize: 'text-blue-400 bg-blue-400/10 border-blue-400/20',
-  explain_code: 'text-green-400 bg-green-400/10 border-green-400/20',
-  generate_email: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20',
-  generate_ideas: 'text-orange-400 bg-orange-400/10 border-orange-400/20',
-  general: 'text-violet-400 bg-violet-400/10 border-violet-400/20',
+const intentBadge: Record<string, string> = {
+  summarize: 'text-[#7aafda] bg-[#7aafda]/10 border-[#7aafda]/20',
+  explain_code: 'text-[#7aba8a] bg-[#7aba8a]/10 border-[#7aba8a]/20',
+  generate_email: 'text-[#c4a96e] bg-[#c4a96e]/10 border-[#c4a96e]/20',
+  generate_ideas: 'text-[#c48a6e] bg-[#c48a6e]/10 border-[#c48a6e]/20',
+  general: 'text-[#a0a09a] bg-[#a0a09a]/10 border-[#a0a09a]/20',
 };
 
 export default function OutputCard({
@@ -37,44 +37,44 @@ export default function OutputCard({
     if (!result) return;
     await navigator.clipboard.writeText(result);
     setCopied(true);
-    toast.success('Copied to clipboard');
+    toast.success('Copied');
     setTimeout(() => setCopied(false), 2000);
   };
 
   if (!loading && !result) return null;
 
   return (
-    <div className="w-full rounded-2xl border border-[#252538] bg-[#0f0f1a] overflow-hidden animate-slide-up">
+    <div className="w-full rounded-xl border border-[#242422] bg-[#141412] overflow-hidden animate-slide-up">
       {/* Card header */}
-      <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#1e1e30]">
-        <div className="flex items-center gap-3 min-w-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[#1e1e1c]">
+        <div className="flex items-center gap-2.5 min-w-0">
           {label && (
             <span
-              className={`flex-shrink-0 flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full border ${
-                intentColors[label?.toLowerCase().replace(' ', '_')] ||
-                intentColors.general
+              className={`flex-shrink-0 flex items-center gap-1 text-[11.5px] font-medium px-2 py-0.5 rounded-md border ${
+                intentBadge[label?.toLowerCase().replace(' ', '_')] ||
+                intentBadge.general
               }`}
             >
               <span>{emoji}</span>
               {label}
             </span>
           )}
-          <p className="text-sm text-[#606080] truncate">{query}</p>
+          <p className="text-[12.5px] text-[#5a5a54] truncate font-[450]">{query}</p>
         </div>
 
         {result && (
           <button
             onClick={handleCopy}
-            className="flex-shrink-0 ml-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-[#8080a0] hover:text-white bg-[#12121e] hover:bg-[#1a1a2e] border border-[#1e1e30] transition-all"
+            className="flex-shrink-0 ml-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[12px] text-[#5a5a54] hover:text-[#a8a8a0] bg-[#1a1a18] hover:bg-[#222220] border border-[#242422] transition-all font-[450]"
           >
             {copied ? (
               <>
-                <Check size={12} className="text-green-400" />
-                <span className="text-green-400">Copied</span>
+                <Check size={11} className="text-[#7aba8a]" />
+                <span className="text-[#7aba8a]">Copied</span>
               </>
             ) : (
               <>
-                <Copy size={12} />
+                <Copy size={11} />
                 Copy
               </>
             )}
@@ -83,11 +83,11 @@ export default function OutputCard({
       </div>
 
       {/* Card body */}
-      <div className="px-5 py-5">
+      <div className="px-4 py-4">
         {loading ? (
-          <div className="flex items-center gap-3 py-4">
+          <div className="flex items-center gap-2.5 py-3">
             <LoadingDots />
-            <span className="text-sm text-[#606080]">Quico is thinking...</span>
+            <span className="text-[13px] text-[#4a4a48]">Working on it…</span>
           </div>
         ) : (
           <div className="markdown-output">
@@ -106,11 +106,11 @@ export default function OutputCard({
                       language={match[1]}
                       PreTag="div"
                       customStyle={{
-                        background: '#0a0a14',
-                        border: '1px solid #252538',
-                        borderRadius: '10px',
+                        background: '#141412',
+                        border: '1px solid #2a2a28',
+                        borderRadius: '8px',
                         margin: '0.75rem 0',
-                        fontSize: '0.85rem',
+                        fontSize: '0.84rem',
                       }}
                     >
                       {String(children).replace(/\n$/, '')}
