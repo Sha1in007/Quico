@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import { groqJSON } from '@/lib/groq';
+import connectDB from '@/lib/mongodb';
+import History from '@/models/History';
 
 export interface NoteResult {
   title: string;
@@ -44,6 +46,17 @@ export async function POST(req: NextRequest) {
     );
 
     const results: NoteResult[] = Array.isArray(data?.results) ? data.results : [];
+
+    await connectDB();
+    await History.create({
+      userId: user.id,
+      query: topic,
+      result: `Found ${results.length} resources`,
+      intent: 'notes',
+      label: 'Notes Finder',
+      emoji: '🔍',
+    });
+
     return Response.json({ results });
   } catch (err) {
     console.error('[NotesFinder]', err);

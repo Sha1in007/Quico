@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import { groqText } from '@/lib/groq';
+import connectDB from '@/lib/mongodb';
+import History from '@/models/History';
 
 const SYSTEMS: Record<string, string> = {
   short: `Summarize the given text/topic in a concise 3-5 sentence paragraph. Use plain, student-friendly language. Capture the most important ideas only.`,
@@ -40,6 +42,17 @@ export async function POST(req: NextRequest) {
 
     const system = SYSTEMS[mode] ?? SYSTEMS.short;
     const summary = await groqText(text, system, 1600);
+
+    await connectDB();
+    await History.create({
+      userId: user.id,
+      query: text.substring(0, 50) + (text.length > 50 ? '...' : ''),
+      result: summary.substring(0, 100) + (summary.length > 100 ? '...' : ''),
+      intent: 'summary',
+      label: 'AI Summary',
+      emoji: '📝',
+    });
+
     return Response.json({ summary });
   } catch (err) {
     console.error('[Summary]', err);

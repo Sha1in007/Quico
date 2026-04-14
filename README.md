@@ -1,189 +1,90 @@
-#  Quico — Quick AI Tools
+# Quico — The All-in-One AI Study Assistant
 
-> Summarize text, explain code, write emails, and generate ideas — all from a single command interface.
+An open-source, full-stack educational platform built to supercharge the student learning experience. Quico leverages Large Language Models (LLMs) to automatically generate study materials, breaking down complex topics into bite-sized, interactive formats.
 
-Built with **Next.js 14**, **MongoDB**, **JWT Auth**, and **Claude AI (Anthropic)**.
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](#)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](#)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](#)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](#)
 
----
-
-##  Features
-
--  **AI-Powered Tools** — Summarize, explain code, write emails, generate ideas
--  **Intent Detection** — Automatically detects what you're asking for
--  **JWT Authentication** — Secure login/register with httpOnly cookies
--  **Query History** — All past queries saved and accessible
--  **Copy to Clipboard** — One-click copy for any output
--  **Dark Mode UI** — Minimal command-palette design
--  **Responsive** — Works on all screen sizes
+*Live Demo: [Add your link here]*
 
 ---
 
-##  Project Structure
+## Features
 
-```
-quico/
-├── app/
-│   ├── (auth)/
-│   │   ├── login/page.tsx       # Login page
-│   │   └── register/page.tsx    # Register page
-│   ├── api/
-│   │   ├── auth/
-│   │   │   ├── login/route.ts
-│   │   │   ├── register/route.ts
-│   │   │   ├── logout/route.ts
-│   │   │   └── me/route.ts
-│   │   ├── ai/route.ts          # Main AI processing endpoint
-│   │   └── history/route.ts     # History CRUD
-│   ├── dashboard/page.tsx       # Main app interface
-│   ├── layout.tsx
-│   ├── page.tsx                 # Redirects to /dashboard
-│   └── globals.css
-├── components/
-│   ├── CommandInput.tsx         # Main command input with suggestions
-│   ├── OutputCard.tsx           # AI response card with markdown
-│   ├── HistoryPanel.tsx         # Slide-in history panel
-│   ├── Navbar.tsx               # Top navbar
-│   └── LoadingDots.tsx          # Animated loading dots
-├── lib/
-│   ├── mongodb.ts               # MongoDB connection with caching
-│   ├── auth.ts                  # JWT sign/verify helpers
-│   └── aiRouter.ts              # Intent detection + Claude API calls
-├── models/
-│   ├── User.ts                  # User schema (bcrypt hashed passwords)
-│   └── History.ts               # History schema
-├── middleware.ts                # Route protection
-├── .env.example
-└── README.md
-```
+Quico features 8 distinct AI-powered utilities designed to help students learn faster and retain more information:
 
----
+*   **Q&A Revision:** Ask open-ended questions and receive detailed, viva-style explanations.
+*   **Smart Flashcards:** Automatically generate spaced-repetition style flashcards from any topic, classified by difficulty.
+*   **Interactive Quizzes:** Dynamically generated Multiple Choice Questions testing direct recall, application, and analysis.
+*   **AI Mind Maps:** Visual breakdowns of complex subjects, organizing roots, subtopics, and details hierarchically.
+*   **Summarizer:** Condense long lectures or articles into brief, exam-focused bullet points.
+*   **Notes Finder:** Quickly locate references to handwritten or topper notes.
+*   **Past Papers (PYQ):** Locate previous year university question papers for strategic prep.
+*   **YouTube Learning:** Curated top study videos for specific academic subjects.
 
-##  Local Setup
-
-### 1. Clone and install dependencies
-
-```bash
-git clone <your-repo-url>
-cd quico
-npm install
-```
-
-### 2. Set up environment variables
-
-```bash
-cp .env.example .env.local
-```
-
-Fill in your `.env.local`:
-
-```env
-MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/quico
-JWT_SECRET=your_super_secret_32_char_minimum_key
-ANTHROPIC_API_KEY=sk-ant-...
-```
-
-#### Getting your keys:
-
-| Key | Where to get it |
-|-----|----------------|
-| `MONGODB_URI` | [MongoDB Atlas](https://cloud.mongodb.com) → Create free cluster → Connect → Drivers |
-| `JWT_SECRET` | Run `openssl rand -base64 32` in terminal |
-| `ANTHROPIC_API_KEY` | [Anthropic Console](https://console.anthropic.com) → API Keys |
-
-### 3. Run the development server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
-
----
-
-##  Deploy to Vercel
-
-### 1. Push to GitHub
-
-```bash
-git init
-git add .
-git commit -m "Initial commit: Quico AI tools app"
-git remote add origin https://github.com/<your-username>/quico.git
-git push -u origin main
-```
-
-### 2. Deploy on Vercel
-
-1. Go to [vercel.com](https://vercel.com) and sign in with GitHub
-2. Click **"New Project"** → Import your `quico` repository
-3. Add environment variables:
-   - `MONGODB_URI`
-   - `JWT_SECRET`
-   - `ANTHROPIC_API_KEY`
-4. Click **Deploy**
-
-Your live URL will be something like `https://quico.vercel.app`
-
----
-
-##  How It Works
-
-### Intent Detection (`lib/aiRouter.ts`)
-The app uses regex pattern matching to detect what the user wants:
-
-| Input Pattern | Intent | Tool |
-|--------------|--------|------|
-| "summarize...", "tldr..." | `summarize` |  Summarize |
-| "explain code...", code blocks | `explain_code` |  Explain Code |
-| "write email...", "draft mail..." | `generate_email` | Write Email |
-| "ideas...", "brainstorm...", "startup..." | `generate_ideas` |  Generate Ideas |
-| Everything else | `general` | General |
-
-### API Flow
-```
-User Input → /api/ai → detectIntent() → Groq API → Save to History → Return response
-```
-
----
-
-##  Example Queries
-
-```
-Summarize this: [paste any article]
-
-Explain this code:
-def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-Write a formal email for requesting an internship at Google
-
-Give me startup ideas for college students in India
-```
-
----
+**System Level Features:**
+*   **Custom JWT Authentication:** Secure login system using HTTP-only cookies and protected routes.
+*   **Persistent User History:** All generated materials are saved to a MongoDB database for future reference.
+*   **Structured AI Schemas:** Backend prompt engineering forces strict JSON adherence from the LLMs to safely render interactive UI components.
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 14 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS |
-| Database | MongoDB + Mongoose |
-| Auth | JWT (httpOnly cookies) |
-| AI | Anthropic Claude (claude-sonnet-4) |
-| Icons | Lucide React |
-| Notifications | React Hot Toast |
-| Markdown | React Markdown + Syntax Highlighter |
-| Deployment | Vercel |
+*   **Frontend:** Next.js 14 (App Router), React, Tailwind CSS, Lucide Icons
+*   **Backend:** Next.js Route Handlers (API), Node.js
+*   **Database:** MongoDB, Mongoose
+*   **Authentication:** JSON Web Tokens (JWT), bcryptjs
+*   **AI Integration:** Groq API, Anthropic SDK (Claude)
+
+## Under the Hood (How it works)
+
+Instead of a basic text-completion chatbot, Quico acts as an orchestrated application layer. 
+
+1.  **Strict Prompting:** When a user requests a "Mind Map" or "Quiz", the backend constructs specialized `SYSTEM` prompts. 
+2.  **Schema Enforcement:** The LLM is forced to return highly structured JSON (e.g., specific arrays for MCQ options, nested trees for mind maps).
+3.  **UI Hydration:** The frontend intercepts this JSON and hydrates interactive React components, transforming raw data into flippable cards, selectable quizzes, and branching trees.
+
+## Local Installation
+
+### Prerequisites
+*   Node.js (v18 or higher)
+*   MongoDB Cluster (Atlas or Local)
+*   Groq API Key / Anthropic API Key
+
+### Setup Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/quico.git
+   cd quico
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**
+   Create a `.env.local` file in the root directory:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_super_secret_jwt_key
+   GROQ_API_KEY=your_groq_api_key
+   ANTHROPIC_API_KEY=your_anthropic_api_key
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+   *The application will be running at `http://localhost:3000`*
+
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+This project is open-source and available under the [MIT License](LICENSE).
 
 ---
-
-##  Built By
-
-Made for B.Tech resume project by 
-Shalin Manjul
-
-
+*Built by [Shalin Manjul]*

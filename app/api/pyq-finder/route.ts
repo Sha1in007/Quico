@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import { groqJSON } from '@/lib/groq';
+import connectDB from '@/lib/mongodb';
+import History from '@/models/History';
 
 export interface PaperResult {
   title: string;
@@ -52,6 +54,17 @@ export async function POST(req: NextRequest) {
     );
 
     const papers: PaperResult[] = Array.isArray(data?.papers) ? data.papers : [];
+
+    await connectDB();
+    await History.create({
+      userId: user.id,
+      query: subject,
+      result: `Found ${papers.length} papers`,
+      intent: 'pyq',
+      label: 'Past Papers',
+      emoji: '📚',
+    });
+
     return Response.json({ papers });
   } catch (err) {
     console.error('[PYQFinder]', err);

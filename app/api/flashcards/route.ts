@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import { groqJSON } from '@/lib/groq';
+import connectDB from '@/lib/mongodb';
+import History from '@/models/History';
 
 interface Flashcard {
   question: string;
@@ -36,6 +38,17 @@ export async function POST(req: NextRequest) {
     );
 
     const cards: Flashcard[] = Array.isArray(data?.cards) ? data.cards : [];
+
+    await connectDB();
+    await History.create({
+      userId: user.id,
+      query: topic,
+      result: `Generated ${cards.length} flashcards`,
+      intent: 'flashcards',
+      label: 'Flashcards',
+      emoji: '📇',
+    });
+
     return Response.json({ cards });
   } catch (err) {
     console.error('[Flashcards]', err);

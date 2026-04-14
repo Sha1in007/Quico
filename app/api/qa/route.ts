@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import { groqText } from '@/lib/groq';
+import connectDB from '@/lib/mongodb';
+import History from '@/models/History';
 
 const SYSTEM: Record<string, string> = {
   short: `You are a friendly student study assistant. Answer in 2-4 sentences using simple, clear language a student can immediately understand. Be direct — no fluff.`,
@@ -21,6 +23,17 @@ export async function POST(req: NextRequest) {
 
     const systemPrompt = SYSTEM[mode] ?? SYSTEM.short;
     const answer = await groqText(query, systemPrompt, 1200);
+
+    await connectDB();
+    await History.create({
+      userId: user.id,
+      query: query,
+      result: answer.substring(0, 100) + (answer.length > 100 ? '...' : ''),
+      intent: 'qa',
+      label: 'Q&A Revision',
+      emoji: '💭',
+    });
+
     return Response.json({ answer });
   } catch (err) {
     console.error('[QA]', err);

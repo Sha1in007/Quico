@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import { groqJSON } from '@/lib/groq';
+import connectDB from '@/lib/mongodb';
+import History from '@/models/History';
 
 export interface MindNode {
   label: string;
@@ -34,6 +36,16 @@ export async function POST(req: NextRequest) {
       SYSTEM,
       2000,
     );
+
+    await connectDB();
+    await History.create({
+      userId: user.id,
+      query: topic,
+      result: `Generated mind map`,
+      intent: 'mindmap',
+      label: 'Mind Map',
+      emoji: '🌿',
+    });
 
     return Response.json({ tree });
   } catch (err) {

@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import { groqJSON } from '@/lib/groq';
+import connectDB from '@/lib/mongodb';
+import History from '@/models/History';
 
 export interface QuizQuestion {
   q: string;
@@ -39,6 +41,17 @@ export async function POST(req: NextRequest) {
     );
 
     const questions: QuizQuestion[] = Array.isArray(data?.questions) ? data.questions : [];
+
+    await connectDB();
+    await History.create({
+      userId: user.id,
+      query: topic,
+      result: `Generated ${questions.length} questions`,
+      intent: 'quiz',
+      label: 'Quiz',
+      emoji: '✅',
+    });
+
     return Response.json({ questions });
   } catch (err) {
     console.error('[Quiz]', err);

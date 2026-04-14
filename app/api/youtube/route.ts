@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import { groqJSON } from '@/lib/groq';
+import connectDB from '@/lib/mongodb';
+import History from '@/models/History';
 
 export interface VideoResult {
   title: string;
@@ -48,6 +50,17 @@ export async function POST(req: NextRequest) {
     );
 
     const videos: VideoResult[] = Array.isArray(data?.videos) ? data.videos : [];
+
+    await connectDB();
+    await History.create({
+      userId: user.id,
+      query: topic,
+      result: `Found ${videos.length} videos`,
+      intent: 'youtube',
+      label: 'YouTube Videos',
+      emoji: '▶️',
+    });
+
     return Response.json({ videos });
   } catch (err) {
     console.error('[YouTube]', err);
